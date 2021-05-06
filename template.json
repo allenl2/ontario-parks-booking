@@ -1,0 +1,21 @@
+{
+    "weekday": "Fri",
+    "date": "2021-09-03",
+    "data": [
+        {
+            "site": "631",
+            "name": "Maple Leaf North",
+            "available": true
+        },
+        {
+            "site": "631",
+            "name": "Maple Leaf North",
+            "available": false
+        },
+        {
+            "site": "631",
+            "name": "Maple Leaf North",
+            "available": false
+        }
+    ]
+}
