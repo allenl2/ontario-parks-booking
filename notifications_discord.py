@@ -1,29 +1,17 @@
-import discord
+import requests
+import json
+import datetime
 from notifications import getMessage
-from clicker import retriveTableData
-from parsedata import saveData, parseData
 
-client = discord.Client()
+webhook_url = 'https://discord.com/api/webhooks/840259728101212234/TvsBU0l78wvbS5ydbsynItdRxlDS4SdstXnxPCAC--uUEBea24ZDK3Bp-vkRtuVkeLvm'
 
-
-@client.event
-async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+time = datetime.datetime.now().strftime("%m/%d/%Y, %H:%M:%S")
+content = "**\*\* LATEST UPDATE as of " + \
+    time + "\*\***\n" + getMessage() + "\n"
+data = {'content': content}
 
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$avail'):
-        await message.channel.send(getMessage())
-
-    if message.content.startswith('$check'):
-        await message.channel.send('Hold tight! I\'m checking to see what campsites are available.')
-        table = retriveTableData()
-        siteData = parseData(table)
-        saveData(siteData)
-        await message.channel.send(getMessage())
-
-client.run('ODQwMDU2MDkxODEwMzMyNjcy.YJSpMw.v_de3IOsJvM2T4rHyaEVL21nuqE')
+def sendDiscordUpdate():
+    r = requests.post(webhook_url, data=json.dumps(
+        data), headers={'Content-Type': 'application/json'})
+    print(r)

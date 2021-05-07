@@ -2,3 +2,4 @@
 venv/
 .vscode/
 _pycache_
+executePy.bat

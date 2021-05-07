@@ -33,7 +33,7 @@ def formatMessage(usableSites):
     for i in usableSites:
         listing = i['month'] + " " + i['day'] + ", " + i['year']
         listing += " | " + i['data']['site'] + " - " + i['data']['name']
-        message += listing + "\n\n"
+        message += listing + "\n"
 
     return message
 
