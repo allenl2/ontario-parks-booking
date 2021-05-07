@@ -28,11 +28,11 @@ def findUsableSites(availableSites):
 
 
 def formatMessage(usableSites):
-    message = "Available campsites at Algonquin Provincial Park: \n\n"
+    message = "Available campsites at Algonquin PP: \n\n"
 
     for i in usableSites:
         listing = i['month'] + " " + i['day'] + ", " + i['year']
-        listing += " || " + i['data']['site'] + " - " + i['data']['name']
+        listing += " | " + i['data']['site'] + " - " + i['data']['name']
         message += listing + "\n\n"
 
     return message

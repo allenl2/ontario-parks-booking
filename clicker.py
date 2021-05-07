@@ -10,14 +10,14 @@ def retriveTableData():
     # set up the browser
     browser = webdriver.Chrome(ChromeDriverManager().install())
     browser.get('https://reservations.ontarioparks.com/')
-    browser.implicitly_wait(5)
+    browser.implicitly_wait(10)
 
     # wait for loading
     element = WebDriverWait(browser, 10).until(
         EC.visibility_of_element_located((By.ID, "mat-tab-label-0-1"))
     )
     print("Going to sleep")
-    time.sleep(0.5)
+    time.sleep(2)
 
     # input search type details
     browser.find_element_by_id("mat-tab-label-0-1").click()
