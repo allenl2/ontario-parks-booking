@@ -1,0 +1,1 @@
+worker:  python campsites_discord_bot.py
