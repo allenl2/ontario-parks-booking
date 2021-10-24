@@ -3,3 +3,4 @@ venv/
 .vscode/
 _pycache_
 executePy.bat
+campsites_discord_bot.py

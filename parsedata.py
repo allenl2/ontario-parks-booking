@@ -18,9 +18,11 @@ def parseData(table):
             responseSplit = re.split('\n', currListing)
             campsiteInfo = re.split('-', responseSplit[0])
 
+            print(responseSplit)
+
             siteNum = campsiteInfo[0].strip()
             siteName = campsiteInfo[1].strip().replace(',', '')
-            isAvailable = True if responseSplit[4].strip(
+            isAvailable = True if responseSplit[3].strip(
             ) == 'Available' else False
 
             dateSplit = responseSplit[1].strip().split(',')

@@ -10,35 +10,41 @@ def retriveTableData():
     # set up the browser
     browser = webdriver.Chrome(ChromeDriverManager().install())
     browser.get('https://reservations.ontarioparks.com/')
-    browser.implicitly_wait(10)
+    browser.implicitly_wait(20)
 
     # wait for loading
     element = WebDriverWait(browser, 10).until(
         EC.visibility_of_element_located((By.ID, "mat-tab-label-0-1"))
     )
     print("Going to sleep")
-    time.sleep(2)
+    time.sleep(25)
 
     # input search type details
     browser.find_element_by_id("mat-tab-label-0-1").click()
     print("Clicked")
-    browser.find_element_by_id("mat-tab-label-0-1").click()
+    browser.find_element_by_id("mat-tab-label-0-2").click()
     print("Clicked - Backcountry")
+
+    # wait for loading
+    element = WebDriverWait(browser, 10).until(
+        EC.visibility_of_element_located((By.ID, "mat-label-1"))
+    )
+
     browser.find_element_by_id("mat-label-1").click()
     print("Clicked - Hiking")
-    browser.find_element_by_id("mat-select-3").click()
+    browser.find_element_by_id("mat-select-8").click()
     print("Clicked - Park DD")
-    browser.find_element_by_id("mat-option-102").click()
+    browser.find_element_by_id("mat-option-126").click()
     print("Clicked - Algonquin Backcountry")
 
     # input search site details
-    browser.find_element_by_id("mat-select-4").click()
+    browser.find_element_by_id("mat-select-10").click()
     print("Clicked - Access Point DD")
-    browser.find_element_by_id("mat-option-122").click()
+    browser.find_element_by_id("mat-option-146").click()
     print("Clicked - Access Point West Gate")
 
     # input search date details
-    browser.find_element_by_id("mat-input-4").click()
+    browser.find_element_by_id("mat-input-6").click()
     print("Clicked - Open calendar")
     browser.find_element_by_id("monthDropdownPicker").click()
     print("Clicked - Open months")
@@ -49,10 +55,17 @@ def retriveTableData():
         "td[aria-label='September 4, 2021']").click()
     print("Clicked - Click 4")
 
+    time.sleep(10)
+
     # actual search
     browser.find_element_by_id("actionSearch").click()
     print("SEARCH")
-    browser.find_element_by_id("mat-tab-label-1-2").click()
+
+    time.sleep(10)
+
+    browser.find_element_by_id("consentButton").click()
+    print("Clicked - Consent")
+    browser.find_element_by_id("grid-view-button").click()
     print("Clicked - Calendar View")
 
     table = browser.find_element_by_id("grid-table")
@@ -61,6 +74,7 @@ def retriveTableData():
     print("DATA RETRIEVED!")
 
     return data
+
 
 # for selecting by CSS selector
 # element[attribute = 'attribute-value']
