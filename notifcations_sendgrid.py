@@ -3,14 +3,16 @@ import datetime
 from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
-from notifications import getMessage
+from notifications import getMessageHTML
 
 load_dotenv('.env')
+
+TEMPLATE_ID = 'd-31f56eb3d5e14c6884e681c5d3e9919d'
 
 
 def sendEmailUpdate():
     time = datetime.datetime.now().strftime("%m/%d/%Y")
-    availability = getMessage()
+    availability = getMessageHTML()
     content = generateHTML(time, availability)
 
     # send email using SendGrid
@@ -27,6 +29,40 @@ def sendEmailUpdate():
         print(response.headers)
     except Exception as e:
         print(e.message)
+
+
+def sendDynamicEmailUpdate():
+    """ Send a dynamic email to a list of email addresses
+
+    :returns API response code
+    :raises Exception e: raises an exception """
+    time = datetime.datetime.now().strftime("%m/%d/%Y")
+    availability = getMessageHTML()
+
+    # create Mail object and populate
+    message = Mail(
+        from_email='allenl.dev@gmail.com',
+        to_emails='2002allenliu@gmail.com'
+    )
+    # pass custom values for our HTML placeholders
+    message.dynamic_template_data = {
+        'subject': 'Campsites Availability Update: {time}'.format(time=time),
+        'date': time,
+        'availability': availability,
+    }
+    message.template_id = TEMPLATE_ID
+    # create our sendgrid client object, pass it our key, then send and return our response objects
+    try:
+        sg = SendGridAPIClient(os.getenv('SENDGRID_TOKEN'))
+        response = sg.send(message)
+        code, body, headers = response.status_code, response.body, response.headers
+        print(f"Response code: {code}")
+        print(f"Response headers: {headers}")
+        print(f"Response body: {body}")
+        print("Dynamic Messages Sent!")
+    except Exception as e:
+        print("Error: {0}".format(e))
+    return str(response.status_code)
 
 
 def generateHTML(time, availability):
@@ -46,3 +82,6 @@ def generateHTML(time, availability):
     """.format(time=time, availability=availability)
 
     return content
+
+
+sendDynamicEmailUpdate()
