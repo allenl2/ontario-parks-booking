@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 import json
+import logging
 
 
 def parseData(table):
@@ -20,8 +21,7 @@ def parseData(table):
 
             print(responseSplit)
 
-            siteNum = campsiteInfo[0].strip()
-            siteName = campsiteInfo[1].strip().replace(',', '')
+            siteNum = campsiteInfo[0].strip().replace(',', '')
             isAvailable = True if responseSplit[3].strip(
             ) == 'Available' else False
 
@@ -38,13 +38,12 @@ def parseData(table):
                 "weekday": weekday,
                 "data": {
                     "site": siteNum,
-                    "name": siteName,
                     "available": isAvailable
                 }
             }
             campsitesArr.append(campsiteData)
 
-    print("Data parsed")
+    logging.info("Data parsed")
     return campsitesArr
 
 
@@ -52,6 +51,6 @@ def saveData(data):
     # save data to a file
     with open('campsitesAvailability.json', 'w') as outfile:
         json.dump(data, outfile)
-        print("Data saved")
+        logging.info("Data saved")
 
 # to-do: format json using logic so dates are grouped together
