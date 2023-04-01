@@ -4,7 +4,16 @@ import json
 import logging
 
 
-def parseData(table):
+def parseData(table) -> list:
+    """ Parses HTML to extract individual campsite date/location entries
+
+    Parameters:
+        table (str): HTML table from webpage
+
+    Returns:
+        list: list of available campsites in dict objects
+    """
+
     # getting the data from the website
     content = BeautifulSoup(table, "html.parser")
     box = content.find('td')
@@ -48,6 +57,15 @@ def parseData(table):
 
 
 def saveData(data):
+    """ Saves provided date to json file
+
+    Parameters:
+        data (List): a list of indiviudal available sites
+
+    Returns:
+        n/a
+    """
+
     # save data to a file
     with open('campsitesAvailability.json', 'w') as outfile:
         json.dump(data, outfile)

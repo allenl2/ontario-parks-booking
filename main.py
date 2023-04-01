@@ -9,11 +9,12 @@ import logging
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    # retrive the data from website, parse, save to file
+    # retrive the data from website
     browser = navigateSite()
     table = retriveTableData(browser)
     browser.close()
 
+    # parse and save data
     siteData = parseData(table)
     saveData(siteData)
 

@@ -30,11 +30,15 @@ def sendEmailUpdate():
         logging.error(e.message)
 
 
-def sendDynamicEmailUpdate():
+def sendDynamicEmailUpdate() -> int:
     """ Send a dynamic email to a list of email addresses
 
-    :returns API response code
-    :raises Exception e: raises an exception """
+    Parameters:
+        n/a
+
+    Returns:
+        int: API response code
+    """
     time = datetime.datetime.now().strftime("%m/%d/%Y")
     availability = getMessageHTML()
 
