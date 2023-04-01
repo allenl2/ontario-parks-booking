@@ -7,38 +7,28 @@ import time
 import logging
 
 
-def retriveTableData():
+month = 'Jun 2023'
+
+
+def navigateSite() -> webdriver.Chrome:
+    """ Navigates the website with the specificed parameters
+
+    Parameters:
+        n/a
+
+    Returns:
+        webdriver.Chrome: webdriver instance on the correct page
+    """
+
     # set up the browser
     options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
     browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+
+    # load site
     browser.get('https://reservations.ontarioparks.com/')
-    browser.implicitly_wait(10)
+    browser.implicitly_wait(5)
 
-    # navigate the site to for the selected campground
-    navigateSite(browser)
-
-    time.sleep(3)
-
-    table = browser.find_element_by_id("grid-table")
-    logging.info('Found table')
-
-    print(table)
-
-    data = table.get_attribute('innerHTML')
-    logging.info("Data retrived")
-
-    return data
-
-# Navigates to the calendar screen for the specified park and dates
-# Inputs: park_id, date_arrive, date_depart
-# Outputs: n/a
-
-
-month = 'Jun 2023'
-
-
-def navigateSite(browser):
     # navigate to correct tab
     waitUntilLoaded(browser, "mat-tab-label-0-3")
     browser.find_element_by_id("mat-tab-label-0-3").click()
@@ -85,6 +75,28 @@ def navigateSite(browser):
     browser.find_element_by_id("grid-view-button").click()
     logging.info("Clicked - Calendar View")
 
+    return browser
+
+
+def retriveTableData(browser) -> str:
+    """ Scrapes HTML from table on the provided page
+
+    Parameters:
+        browser (webdriver.Chrome): a browser open the the correct page
+
+    Returns:
+        str: HTML output of the table
+    """
+
+    table = browser.find_element_by_id("grid-table")
+    logging.info('Found table')
+
+    print(table)
+
+    data = table.get_attribute('innerHTML')
+    logging.info("Data retrived")
+
+    return data
 
 # pauses run until the specified element is loaded
 
