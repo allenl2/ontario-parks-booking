@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from notifications import getMessageHTML
+import logging
 
 load_dotenv('.env')
 
@@ -24,11 +25,9 @@ def sendEmailUpdate():
     try:
         sg = SendGridAPIClient(os.getenv('SENDGRID_TOKEN'))
         response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        logging.info(response.status_code)
     except Exception as e:
-        print(e.message)
+        logging.error(e.message)
 
 
 def sendDynamicEmailUpdate():
@@ -56,12 +55,9 @@ def sendDynamicEmailUpdate():
         sg = SendGridAPIClient(os.getenv('SENDGRID_TOKEN'))
         response = sg.send(message)
         code, body, headers = response.status_code, response.body, response.headers
-        print(f"Response code: {code}")
-        print(f"Response headers: {headers}")
-        print(f"Response body: {body}")
-        print("Dynamic Messages Sent!")
+        logging.info(f"Email sent. Response code: {code}")
     except Exception as e:
-        print("Error: {0}".format(e))
+        logging.error("Error: {0}".format(e))
     return str(response.status_code)
 
 
@@ -82,6 +78,3 @@ def generateHTML(time, availability):
     """.format(time=time, availability=availability)
 
     return content
-
-
-sendDynamicEmailUpdate()

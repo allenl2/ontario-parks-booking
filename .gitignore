@@ -1,6 +1,6 @@
 .env
 venv/
 .vscode/
-_pycache_
+__pycache__/
 executePy.bat
 campsites_discord_bot.py
