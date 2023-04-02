@@ -1,5 +1,6 @@
 .env
 venv/
+venv-campsites/
 .vscode/
 __pycache__/
 executePy.bat
